@@ -18,7 +18,17 @@ while cap.isOpened():
     
     with torch.no_grad():
         prediction = midas(input_batch)
-        print(prediction)
+        
+        prediction = torch.nn.functional.interpolate(
+            prediction.unsqueeze(1),
+            size=img.shape[:2],
+            mode="bicubic",
+            align_corners=False,
+        ).squeeze()
+        
+        output = prediction.cpu().numpy()
+        
+        print(output)
     
     cv2.imshow('CV2 video', frame)
     
