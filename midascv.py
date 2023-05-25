@@ -27,11 +27,12 @@ while cap.isOpened():
         ).squeeze()
         
         output = prediction.cpu().numpy()
-        
-        print(output)
     
+    plt.imshow(output)
     cv2.imshow('CV2 video', frame)
+    plt.pause(0.00001)
     
     if cv2.waitKey(10) & 0xFF == ord('q'):
         cap.release()
         cv2.destroyAllWindows()
+plt.show()
