@@ -13,6 +13,13 @@ cap = cv2.VideoCapture(0)
 while cap.isOpened():
     ret, frame = cap.read()
     
+    img = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+    input_batch = transform(img).to('cpu')
+    
+    with torch.no_grad():
+        prediction = midas(input_batch)
+        print(prediction)
+    
     cv2.imshow('CV2 video', frame)
     
     if cv2.waitKey(10) & 0xFF == ord('q'):
